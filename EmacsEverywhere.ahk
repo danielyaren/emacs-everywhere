@@ -286,6 +286,9 @@ ClearMark()
 ; Ctrl+W - Cut
 ^w::SendCommand("^{x}")
 
+; Ctrl+M - Enter
+^m::SendCommand("{Enter}")
+
 ; Ctrl+X - Prefix
 ^x::
   if CtrlXPrefix = 1
