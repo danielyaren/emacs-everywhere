@@ -48,7 +48,7 @@ GroupAdd, EmacsApps, ahk_class Transparent Windows Client
 GroupAdd, EmacsApps, ahk_group PoSH
 GroupAdd, EmacsApps, ahk_class IEFrame
 GroupAdd, EmacsApps, ahk_class Chrome_WidgetWin_1
-GroupAdd, EmacsApps, ahk_class Wox
+GroupAdd, EmacsApps, - Microsoft Visual Studio
 GroupAdd, EmacsApps, JetPopupMenuView ; ReSharper popups
 GroupAdd, EmacsApps, Rename ; ReSharper Rename dialog
 GroupAdd, EmacsApps, ahk_class HwndWrapper.*,Find Results,,Sudoku UI ; Resharper Find Usages dialog (this is why TitleMatchMode RegEx is used)
@@ -379,20 +379,6 @@ F3::SendCommand("^f")
 ^w::SendCommand("^w")
 #IfWinActive ; End of IE bindings
 
-; FreeCommander
-#IfWinActive ahk_class FreeCommanderXE.SingleInst.1
-^n::SendCommand("{Down " . NumericPrefix . "}")
-^p::SendCommand("{Up " . NumericPrefix . "}")
-^u::IncreaseNumericPrefix()
-^g::SendCommand("{Escape}")
-^/::SendCommand("^{Home}")
-^+d::SendCommand("^+v")
-!b::SendCommand("!{Left}")
-!f::SendCommand("!{Right}")
-!<::SendCommand("{Home}")
-!>::SendCommand("{End}")
-#IfWinActive ; End of FreeCommander bindings
-
 #IfWinActive ahk_class TfcSearchForm
 Space::SendCommand("+{Space}")
 #IfWinActive
@@ -412,6 +398,58 @@ Space::SendCommand("+{Space}")
 ^+s::SendCommand("^i")
 #IfWinActive ; End of cmd and PowerShell ISE bindings
 
+; Visual Studio
+#IfWinActive, - Microsoft Visual Studio
+^n::SendCtrlXConditional("^x^n", "{Down " . NumericPrefix . "}")
+^p::SendCtrlXConditional("^x^p", "{Up " . NumericPrefix . "}")
+^b::SendCtrlXConditional("^x^b", "{Left " . NumericPrefix . "}")
+^d::SendCommand("{Delete " . NumericPrefix . "}")
+^v::SendCommand("{PgDn 1}")
+!v::SendCommand("{PgUp 1}")
+^i::SendCtrlXConditional("^{Space}", "^i")
+^s::SendCtrlXConditional("^s", "^i")
+^r::SendCommand("^+i")
+^y::SendCommand("^v")
+^g::
+  ClearMark()
+  SendCommand("{ESC}")
+  return
+!w::
+  SendCommand("^c")
+  ClearMark()
+  SendCommand("{ESC}")
+  return
+!x::SendCommand("^wa")
+^x::
+  if CtrlXPrefix = 1
+    SendCommand("^x^x")
+  else
+    CtrlXPrefix = 1
+  return
+b::SendCtrlXConditional("+!u", "b")
+d::SendCtrlXConditional("^xd", "d")
+;h::SendCtrlXConditional("^{PgUp}", "h")
+;h::SendCtrlXConditional("^xf", "h")
+k::SendCtrlXConditional("^xk", "k")
+;l::SendCtrlXConditional("^{PgDn}", "l")
+m::SendCtrlXConditional("^xm", "m")
+r::SendCtrlXConditional("^xr", "r")
+u::SendCtrlXConditional("^ku", "u")
+c::SendCtrlXConditional("^kc", "c")
+^!a::SendCommand("!{Up}")
+^!e::SendCommand("!{Down}")
+^!h::
+  SetMark()
+  SendCommand("^+[")
+  return
+^!j::SendCommand("^e^u")
+^F7::SendCommand("+{F12}")
+^k::SendCommand("^x^k")
+^+\::SendCommand("^e\")
+^+f::SendCommand("^+f")
+^_::SendCommand("^+_")
+#IfWinActive ; End of Visual Studio bindings
+
 ; p4v - for the 'pending' window, ctrl+d performs a diff when focus is on the shelved files pane
 #IfWinActive, Pending Changelist ahk_class Qt5QWindowIcon
 ^d::
@@ -422,41 +460,6 @@ Space::SendCommand("+{Space}")
   SendCommand("{Delete " . NumericPrefix . "}")
   return
 #IfWinActive
-
-; MusicBee
-#IfWinActive MusicBee ahk_class WindowsForms10.Window.8.app.0.34f5582_r10_ad1
-^Space::SetMark()
-^g::
-  ClearMark()
-  SendCommand("{ESC}")
-  return
-^u::IncreaseNumericPrefix()
-
-^n::SendCommand("{Down " . NumericPrefix . "}")
-^p::SendCommand("{Up " . NumericPrefix . "}")
-
-^v::SendCommand("{PgDn}")
-!v::SendCommand("{PgUp}")
-!<::SendCommand("{Home 1}")
-!>::SendCommand("{End 1}")
-#IfWinActive ; End MusicBee bindings
-
-; PyCharm
-#IfWinActive, PyCharm ahk_class SunAwtFrame
-^u::IncreaseNumericPrefix()
-
-; Character navigation
-;^f::SendCommand("{Right " . NumericPrefix . "}")
-;^b::SendCommand("{Left " . NumericPrefix . "}")
-
-; Word Navigation
-!f::SendCommand("^{Right " . NumericPrefix . "}")
-!b::SendCommand("^{Left " . NumericPrefix . "}")
-
-; Line Navigation
-^n::SendCommand("{Down " . NumericPrefix . "}")
-^p::SendCommand("{Up " . NumericPrefix . "}")
-#IfWinActive ; End PyCharm bindings
 
 ; Common bindings that apply to all apps in the EmacsApps group
 #IfWinActive, ahk_group EmacsApps
