@@ -1,5 +1,7 @@
 ; Emacs key bindings for various Windows applications -- by John Cooper.
 ;
+; Some modifications by Daniel Yaren.
+;
 ; Requires AutoHotkey: http://www.autohotkey.com
 ;
 ; This script provides basic Emacs key bindings for various Windows applications.
