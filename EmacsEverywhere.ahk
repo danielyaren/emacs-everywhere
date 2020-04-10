@@ -338,6 +338,11 @@ ClearMark()
 ^g:: SendCommand("{Escape}")
 #IfWinActive ; End of Word's save changes dialog bindings
 
+; Chrome bindings
+#IfWinActive ahk_class Chrome_WidgetWin_1
+^m::SendCommand("{Enter}")
+#IfWinActive ; End of Chrome bindings
+
 ; Firefox bindings for the address/search bar
 #IfWinActive ahk_class MozillaWindowClass
 ;^a::SendConditionally("{Home}", MozillaClass)
