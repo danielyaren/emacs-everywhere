@@ -341,6 +341,7 @@ ClearMark()
 ; Chrome bindings
 #IfWinActive ahk_class Chrome_WidgetWin_1
 ^m::SendCommand("{Enter}")
+^s::SendCommand("^f")
 #IfWinActive ; End of Chrome bindings
 
 ; Firefox bindings for the address/search bar
