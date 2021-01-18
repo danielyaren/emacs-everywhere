@@ -49,7 +49,7 @@ GroupAdd, EmacsApps, ahk_class LyncConversationWindowClass ; Office Communicator
 GroupAdd, EmacsApps, ahk_class Transparent Windows Client
 GroupAdd, EmacsApps, ahk_group PoSH
 GroupAdd, EmacsApps, ahk_class IEFrame
-GroupAdd, EmacsApps, ahk_class Chrome_WidgetWin_1
+GroupAdd, EmacsApps, ahk_exe chrome.exe
 GroupAdd, EmacsApps, - Microsoft Visual Studio
 GroupAdd, EmacsApps, JetPopupMenuView ; ReSharper popups
 GroupAdd, EmacsApps, Rename ; ReSharper Rename dialog
@@ -338,8 +338,13 @@ ClearMark()
 ^g:: SendCommand("{Escape}")
 #IfWinActive ; End of Word's save changes dialog bindings
 
+; VSCode
+#IfWinActive ahk_exe Code.exe
+^m::SendCommand("{Enter}")
+#IfWinActive ; End of VS Code bindings
+
 ; Chrome bindings
-#IfWinActive ahk_class Chrome_WidgetWin_1
+#IfWinActive ahk_exe chrome.exe
 ^m::SendCommand("{Enter}")
 ^s::SendCommand("^f")
 #IfWinActive ; End of Chrome bindings
